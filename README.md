@@ -8,7 +8,7 @@ This repository documents my experience installing macOS Sequoia on the ASUS ROG
 - **Motherboard**: ASUS ROG Strix Z790-A
 - **CPU**: Intel Core i9-14900K (iGPU disabled)
 - **GPU**: AMD Radeon RX 6800 XT
-- **Wi-Fi/Bluetooth**: Switched from Intel Wi-Fi to BCM943602CDP due to better macOS support
+- **Wi-Fi/Bluetooth**: Switched from Intel Wi-Fi to BCM943602CDP due to easier Sequoia support via OCLP root patch
 - **Storage**:
   - **WD Black SN850X 2TB** (OpenCore + macOS Sequoia installation)
   - **Samsung 970 EVO Plus 1TB** (Windows 11)
@@ -21,24 +21,22 @@ This repository documents my experience installing macOS Sequoia on the ASUS ROG
 ## Installation Steps
 
 ### 1. Prepare OpenCore Bootloader
-- Download OpenCore and create a USB installer
-- Configure `config.plist`, ensuring correct ACPI patches, kexts, and device properties
+- Download MacOS Install App and create a USB installer
+- Download OpenCore Release and configure `config.plist`, ensuring correct ACPI patches, kexts, and device properties
+- Use USBToolbox on Windows 11 to generate a `USBMap.kext`
 - Use OpenCore Configurator to generate PlatformInfo (ROM based on motherboard MAC address)
+- Adjust BIOS settings for Hackintosh
 
 ### 2. Install macOS Sequoia
 - Boot into OpenCore Boot Picker and start the macOS installer
 - Format SSD as APFS and install macOS
 - Copy EFI folder to internal storage post-installation
-- Adjust BIOS settings for optimal stability
 
-## Troubleshooting and Fixes
+## Post-Installation, Troubleshooting and Fixes
 
 ### USB Issues
-- Used USBToolbox on Windows 11 to generate a `USBMap.kext`
 - Reduced port count to below 15 to comply with macOS limitations
-
-### Sleep/Wake Problems
-- Adjusted SSDT and power management settings
+- Sleep/Wake may be broken if you connect mainboard's Type-C port to a monitor (in my case, LG 34WK95U-W) with Thunderbolt/Type-C support. Use mainboard's Type-A port or monitor's Type-B port instead.
 
 ### NVMe TRIM Compatibility
 - Since Monterey, APFS has had compatibility issues with NVMe TRIM, causing long boot times or premature SSD failure
@@ -48,7 +46,7 @@ This repository documents my experience installing macOS Sequoia on the ASUS ROG
 ## Optimization
 
 - If your SMBIOS is set to **MacPro7,1**, you can use `resourceconverter.sh` from CPUFriend to convert the `plist` from **iMacPro1,1** into `CPUFriendDataProvider.kext`, ensuring proper CPU performance.
-- Ran extended stability tests to confirm reliability
+- Run benchmark (such as GeekBench6) to compare with Windows 11 CPU/GPU performance scores.
 
 ## Conclusion
 This Hackintosh setup is now stable and performs well. With precise OpenCore adjustments, the system offers excellent performance and compatibility. If you're planning a similar setup, I hope this documentation helps!

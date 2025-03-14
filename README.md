@@ -5,7 +5,7 @@ This repository documents my experience installing macOS Sequoia on the ASUS ROG
 
 ## Hardware Specifications
 
-- **Motherboard**: ASUS ROG Strix Z790-A
+- **Motherboard**: ASUS ROG Strix Z790-A WIFI D4
 - **CPU**: Intel Core i9-14900K (iGPU disabled)
 - **GPU**: AMD Radeon RX 6800 XT
 - **Wi-Fi/Bluetooth**: Switched from Intel Wi-Fi to BCM943602CDP due to easier Sequoia support via OCLP root patch
@@ -23,6 +23,7 @@ This repository documents my experience installing macOS Sequoia on the ASUS ROG
 ### 1. Prepare OpenCore Bootloader
 - Download MacOS Install App and create a USB installer
 - Download OpenCore Release and configure `config.plist`, ensuring correct ACPI patches, kexts, and device properties
+- SMBIOS: MacPro7,1 or iMacPro1,1
 - Use USBToolbox on Windows 11 to generate a `USBMap.kext`
 - Use OpenCore Configurator to generate PlatformInfo (ROM based on motherboard MAC address)
 - Adjust BIOS settings for Hackintosh
@@ -36,16 +37,16 @@ This repository documents my experience installing macOS Sequoia on the ASUS ROG
 
 ### USB Issues
 - Reduced port count to below 15 to comply with macOS limitations
-- Sleep/Wake may be broken if you connect mainboard's Type-C port to a monitor (in my case, LG 34WK95U-W) with Thunderbolt/Type-C support. Use mainboard's Type-A port or monitor's Type-B port instead.
+- Sleep/Wake may be broken if you connect mainboard's Type-C port to a monitor (in my case, LG 34WK95U-W) with Thunderbolt/Type-C support due to unknown power source conflict. Use mainboard's Type-A port or monitor's Type-B port instead.
 
 ### NVMe TRIM Compatibility
 - Since Monterey, APFS has had compatibility issues with NVMe TRIM, causing long boot times or premature SSD failure
 - Setting `SetApfsTrimTimeout` in OpenCore does not fully resolve the problem
-- The **only** reliable solution is to use an NVMe SSD known to be compatible, such as the **WD Black SN850X**, which is widely regarded as stable
+- The **only** reliable solution is to use an NVMe SSD well-known to be compatible, such as the **WD Black SN850X**
 
 ## Optimization
 
-- If your SMBIOS is set to **MacPro7,1**, you can use `resourceconverter.sh` from CPUFriend to convert the `plist` from **iMacPro1,1** into `CPUFriendDataProvider.kext`, ensuring proper CPU performance.
+- If your SMBIOS is set to **MacPro7,1**, you can use `resourceconverter.sh` from CPUFriend to convert the X86PlatformPlugin plist for **iMacPro1,1** into `CPUFriendDataProvider.kext`, ensuring proper peak CPU performance. This is the easiest way.
 - Run benchmark (such as GeekBench6) to compare with Windows 11 CPU/GPU performance scores.
 
 ## Conclusion

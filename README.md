@@ -1,0 +1,1 @@
+# Hackintosh-ROG-Strix-Z790A

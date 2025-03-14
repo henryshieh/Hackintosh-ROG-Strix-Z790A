@@ -15,8 +15,8 @@ This repository documents my experience installing macOS Sequoia on the ASUS ROG
 
 ## Why Broadcom Wi-Fi over Intel?
 
-1. **Intel Wi-Fi is not natively supported**: A third-party OpenIntelWireless driver enables it, but development has stalled after Sonoma. No updates for Sequoia are available.
-2. **OCLP workaround for Intel Wi-Fi is cumbersome**: It requires device property modifications to disguise the Intel card as Broadcom or patching OpenCore Legacy Patcher (OCLP) itself. Broadcom Wi-Fi, however, still has native Bluetooth support in Sequoia and works with OCLP without extra tweaks.
+1. **Intel Wi-Fi is no longer supported**: OpenIntelWireless driver development has stalled after Sonoma. No updates for Sequoia are available.
+2. **OCLP workaround for Intel Wi-Fi is cumbersome**: It requires deviceproperties workaround to fake the Intel Wi-Fi as Broadcom to trigger OCLP (OpenCore Legacy Patcher) to perform Modern Wireless Patch. 
 
 ## Installation Steps
 

@@ -19,40 +19,45 @@ For detailed hardware information, please refer to [`Hardware.md`](./Hardware.md
 
 ## Installation Steps
 
-### Prepare OpenCore Bootloader
+### BIOS Settings
+Before installing any operating system, configure your BIOS to ensure compatibility for both Windows and macOS:
+- **Secure Boot**: Disabled  
+- **Boot Mode**: UEFI  
+- **CFG Lock**: Disabled (use `AppleCpuPmCfgLock` in OpenCore if CFG Lock cannot be disabled).  
+- **Above 4G Decoding**: Enabled  
+- **XHCI Hand-off**: Enabled  
+Setting these options upfront ensures a smooth installation process for both Windows 11 and macOS.
 
-- **Install Windows 11**  
-  Disconnect all other drives with existing EFI partitions during the Windows installation process. This prevents Windows from placing its boot manager on the wrong disk. After installation, reconnect the drives and verify the boot priority in your BIOS.
+### Install Windows 11
+Install Windows 11 on a dedicated SSD:
+- Disconnect all other drives with existing EFI partitions during the installation process to prevent Windows from placing its boot manager on the wrong disk.  
+- After installation, reconnect your drives and verify the boot priorities in your BIOS.
 
-- **Perform Essential Preparations on Windows 11**  
-  Use **SSDTTime** to dump the ACPI tables for your system and generate all necessary ACPI patch files for OpenCore, such as those for CPU power management or disabling unsupported features.  
-  Use **USBToolbox** to map USB ports and create a `USBMap.kext`. You can manually edit the resulting file to disable unused ports and ensure compliance with macOS's USB port limit.
+### Preparations on Windows 11
+While in Windows 11, complete these essential tasks:
+- Use **SSDTTime** to dump the original ACPI tables and generate the ACPI patch files required for OpenCore (e.g., for USB, CPU power management).  
+- Use **USBToolbox** to map USB ports and generate a `USBMap.kext`. You can manually edit the resulting file to ensure compliance with macOS's 15-port limit.
 
-- **Create a macOS USB Installer**  
-  Download the macOS installer app and use Apple’s `createinstallmedia` command to create a bootable USB installer. If the USB fails to boot, reformat the drive and try again with a reliable USB stick.
+### Preparations on Another Mac
+On a macOS system, perform the following steps:
+- Prepare a USB installer for macOS Sequoia using the `createinstallmedia` command. Ensure the USB drive is at least **32GB**, as newer macOS versions like Sonoma and Sequoia require more space than earlier versions.  
+- Set up OpenCore by gathering and organizing all necessary files:
+  - Core OpenCore files  
+  - `config.plist`  
+  - ACPI patches  
+  - Kexts (e.g., Lilu, WhateverGreen, VirtualSMC)  
+- Ensure all required files are placed correctly in the `EFI` folder.
 
-- **Download and Configure OpenCore**  
-  Obtain the latest OpenCore release and set up the `EFI` folder. Configure `config.plist` to include the required ACPI patches, kexts (e.g., Lilu, WhateverGreen, VirtualSMC), and device properties for GPU, Wi-Fi, and other hardware. GPU-related issues, like black screens, may require adjustments in framebuffer settings.
-
-- **Set Up SMBIOS**  
-  Use a compatible system definition, such as **MacPro7,1** or **iMacPro1,1**, and generate PlatformInfo with OpenCore Configurator. Set the ROM value based on your motherboard's MAC address to enable iMessage and FaceTime functionality.
-
-- **Adjust BIOS Settings**  
-  Configure the following in the BIOS for Hackintosh compatibility:  
-  - Secure Boot: Disabled  
-  - Boot Mode: UEFI  
-  - CFG Lock: Disabled (enable `AppleCpuPmCfgLock` if unable to disable in BIOS)  
-  - Above 4G Decoding: Enabled  
-  - XHCI Hand-off: Enabled  
+### Configuration Details
+Details about configuring `config.plist` (e.g., Device Properties, SMBIOS, kernel settings) are available in a separate file for reference.
 
 ### Install macOS Sequoia
-
 - Boot from the macOS USB installer and select the installer from the OpenCore Boot Picker.  
 - Use Disk Utility to format the target SSD as **APFS** with a **GUID Partition Map**.  
 - Proceed with the macOS installation.  
-- After installation, copy the `EFI` folder to the SSD's EFI partition to ensure it can boot without the USB.  
+- After installation, copy the `EFI` folder to the SSD's EFI partition to enable standalone booting.  
 - **Troubleshooting Tips**:  
-  If the installer hangs, verify the `config.plist` settings, especially the ACPI patches and kexts.  
+  If the installation hangs, verify the `config.plist` settings, especially ACPI patches and kexts.  
   Unexpected reboots during installation may indicate misconfigured BIOS settings or missing ACPI patches.
 
 ## Post-Installation, Troubleshooting and Fixes

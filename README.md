@@ -25,7 +25,7 @@ For detailed hardware information, please refer to [`Hardware.md`](./Hardware.md
   Disconnect all other drives with existing EFI partitions during the Windows installation process. This prevents Windows from placing its boot manager on the wrong disk. After installation, reconnect the drives and verify the boot priority in your BIOS.
 
 - **Perform Essential Preparations on Windows 11**  
-  Use **SSDTTime** to dump the ACPI tables for your system and generate all necessary ACPI patch files for OpenCore, such as USB mapping and CPU power management.  
+  Use **SSDTTime** to dump the ACPI tables for your system and generate all necessary ACPI patch files for OpenCore, such as those for CPU power management or disabling unsupported features.  
   Use **USBToolbox** to map USB ports and create a `USBMap.kext`. You can manually edit the resulting file to disable unused ports and ensure compliance with macOS's USB port limit.
 
 - **Create a macOS USB Installer**  

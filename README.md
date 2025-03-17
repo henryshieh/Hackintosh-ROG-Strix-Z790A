@@ -13,8 +13,9 @@ For detailed hardware information, please refer to [`Hardware.md`](./Hardware.md
 - **GPU**: AMD Radeon RX6800XT
 - **Wi-Fi/Bluetooth**: BCM943602CDP (replacing Intel Wi-Fi)
 - **Storage**:
-  - **WD Black SN850X 2TB** (OpenCore + macOS Sequoia installation)
-  - **Samsung 970 EVO Plus 1TB** (Windows 11)
+  - **WD Black SN850X 2TB** as OpenCore + macOS Sequoia installation
+  - **Samsung 970 EVO Plus 1TB** as Windows 11.
+  - **Samsung 970 EVO 1TB** as Data Storage
 
 ## Installation Steps
 

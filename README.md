@@ -14,28 +14,51 @@ For detailed hardware information, please refer to [`Hardware.md`](./Hardware.md
 - **Wi-Fi/Bluetooth**: BCM943602CDP (replacing Intel Wi-Fi)
 - **Storage**:
   - **WD Black SN850X 2TB** as OpenCore + macOS Sequoia installation
-  - **Samsung 970 EVO Plus 1TB** as Windows 11.
+  - **Samsung 970 EVO Plus 1TB** as Windows 11
   - **Samsung 970 EVO 1TB** as Data Storage
 
 ## Installation Steps
 
-### 1. Prepare OpenCore Bootloader
-- Download MacOS Install App and create a USB installer
-- Download OpenCore Release and configure `config.plist`, ensuring correct ACPI patches, kexts, and device properties
-- SMBIOS: MacPro7,1 or iMacPro1,1
-- Use USBToolbox on Windows 11 to generate a `USBMap.kext`
-- Use OpenCore Configurator to generate PlatformInfo (ROM based on motherboard MAC address)
-- Adjust BIOS settings for Hackintosh
+### Prepare OpenCore Bootloader
 
-### 2. Install macOS Sequoia
-- Boot into OpenCore Boot Picker and start the macOS installer
-- Format SSD as APFS and install macOS
-- Copy EFI folder to internal storage post-installation
+- **Install Windows 11**  
+  Disconnect all other drives with existing EFI partitions during the Windows installation process. This prevents Windows from placing its boot manager on the wrong disk. After installation, reconnect the drives and verify the boot priority in your BIOS.
+
+- **Perform Essential Preparations on Windows 11**  
+  Use **SSDTTime** to dump the ACPI tables for your system and generate all necessary ACPI patch files for OpenCore, such as USB mapping and CPU power management.  
+  Use **USBToolbox** to map USB ports and create a `USBMap.kext`. You can manually edit the resulting file to disable unused ports and ensure compliance with macOS's USB port limit.
+
+- **Create a macOS USB Installer**  
+  Download the macOS installer app and use Apple’s `createinstallmedia` command to create a bootable USB installer. If the USB fails to boot, reformat the drive and try again with a reliable USB stick.
+
+- **Download and Configure OpenCore**  
+  Obtain the latest OpenCore release and set up the `EFI` folder. Configure `config.plist` to include the required ACPI patches, kexts (e.g., Lilu, WhateverGreen, VirtualSMC), and device properties for GPU, Wi-Fi, and other hardware. GPU-related issues, like black screens, may require adjustments in framebuffer settings.
+
+- **Set Up SMBIOS**  
+  Use a compatible system definition, such as **MacPro7,1** or **iMacPro1,1**, and generate PlatformInfo with OpenCore Configurator. Set the ROM value based on your motherboard's MAC address to enable iMessage and FaceTime functionality.
+
+- **Adjust BIOS Settings**  
+  Configure the following in the BIOS for Hackintosh compatibility:  
+  - Secure Boot: Disabled  
+  - Boot Mode: UEFI  
+  - CFG Lock: Disabled (enable `AppleCpuPmCfgLock` if unable to disable in BIOS)  
+  - Above 4G Decoding: Enabled  
+  - XHCI Hand-off: Enabled  
+
+### Install macOS Sequoia
+
+- Boot from the macOS USB installer and select the installer from the OpenCore Boot Picker.  
+- Use Disk Utility to format the target SSD as **APFS** with a **GUID Partition Map**.  
+- Proceed with the macOS installation.  
+- After installation, copy the `EFI` folder to the SSD's EFI partition to ensure it can boot without the USB.  
+- **Troubleshooting Tips**:  
+  If the installer hangs, verify the `config.plist` settings, especially the ACPI patches and kexts.  
+  Unexpected reboots during installation may indicate misconfigured BIOS settings or missing ACPI patches.
 
 ## Post-Installation, Troubleshooting and Fixes
 
 ### USB Issues
-- Reduced port count to below 15 to comply with macOS limitations
+- Reduced port count to below 15 to comply with macOS limitations.
 - Sleep/Wake may be broken if you connect the motherboard's Type-C port to a monitor (e.g., LG 34WK95U-W) with Thunderbolt/Type-C support due to unknown power source conflict. Use the motherboard's Type-A port or monitor's Type-B port instead.
 
 ### NVMe TRIM Compatibility

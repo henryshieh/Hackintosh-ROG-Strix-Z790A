@@ -33,7 +33,7 @@ Install Windows 11 on a dedicated SSD:
 - Disconnect all other drives with existing EFI partitions during the installation process to prevent Windows from placing its boot manager on the wrong disk.
 - After installation, reconnect your drives and verify the boot priorities in your BIOS.
 
-**Important Reminder**: After installation, always use the Windows Boot Manager to boot into Windows 11. While it is possible to boot Windows 11 through OpenCore, doing so may lead to issues. OpenCore typically applies ACPI fixes and loads custom AML files, which could interfere with Windows' normal operation and might even affect Windows activation.
+**Reminder**: After installation, always use `Windows Boot Manager` to boot into Windows 11. While it is possible to boot Windows through OpenCore, doing so may lead to issues. OpenCore typically applies ACPI fixes and loads custom AML files, which could interfere with Windows' normal operation and might even affect Windows activation.
 
 ### Preparations on Windows 11
 While in Windows 11, complete these essential tasks:

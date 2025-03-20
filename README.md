@@ -31,12 +31,14 @@ Setting these options upfront ensures a smooth installation process for both Win
 ### Install Windows 11
 Install Windows 11 on a dedicated SSD:
 - Disconnect all other drives with existing EFI partitions during the installation process to prevent Windows from placing its boot manager on the wrong disk.  
+- **Important Reminder**: After installation, always use the Windows Boot Manager to boot into Windows 11. While it is possible to boot Windows 11 through OpenCore, doing so may lead to issues. OpenCore typically applies ACPI fixes and loads custom AML files, which could interfere with Windows' normal operation and might even affect Windows activation.
 - After installation, reconnect your drives and verify the boot priorities in your BIOS.
 
 ### Preparations on Windows 11
 While in Windows 11, complete these essential tasks:
 - Use **SSDTTime** to dump the original ACPI tables and generate the ACPI patch files required for OpenCore (e.g., for USB, CPU power management).  
-- Use **USBToolbox** to map USB ports and generate a `USBMap.kext`. You can manually edit the resulting file to ensure compliance with macOS's 15-port limit.
+- Use **USBToolbox** to map USB ports and generate a `USBMap.kext`. Refer to the [`usb_layout.png`](images/usb_layout.png) file in this repository to decide which ports to disable. You can make these adjustments during the mapping process or manually edit the resulting file to ensure compliance with macOS's 15-port limit.
+
 
 ### Preparations on Another Mac
 On a macOS system, perform the following steps:
